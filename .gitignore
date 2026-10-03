@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# PC Monitor - repository ignore rules
+# Secrets must NEVER be committed.
+# ---------------------------------------------------------------------------
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.serviceaccount.json
+*-firebase-adminsdk-*.json
+**/service-account*.json
+**/firebase-adminsdk*.json
+secrets/
+*.pem
+*.key
+
+# Local scratch files (project identifiers / tooling metadata)
+firebase.txt
+.freebuff/
+!**/*.pubkey
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Agent runtime data (never commit a live agent config: it holds device tokens)
+agent/config.json
+agent/dist/
+agent/build/
+agent/*.spec
+*.log
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

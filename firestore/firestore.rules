@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// PC Monitor - Firestore security rules.
+//
+// The database is only ever accessed by the FastAPI backend through the
+// Firebase Admin SDK, which bypasses these rules. They are therefore locked
+// down completely: no client (web or desktop) may read or write anything.
+// This guarantees that neither the browser nor PC-Monitor.exe can reach
+// Firestore directly, even if the Firebase web config leaks.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function denied() {
+      return false;
+    }
+
+    match /devices/{deviceId} {
+      allow read, write: if denied();
+      match /telemetry/{telemetryId} {
+        allow read, write: if denied();
+      }
+      match /logs/{logId} {
+        allow read, write: if denied();
+      }
+    }
+
+    match /revoked_devices/{deviceId} {
+      allow read, write: if denied();
+    }
+
+    // Catch-all: nothing is accessible from a client.
+    match /{document=**} {
+      allow read, write: if denied();
+    }
+  }
+}
